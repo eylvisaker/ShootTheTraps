@@ -1,86 +1,79 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using AgateLib;
-using AgateLib.DisplayLib;
-using AgateLib.Geometry;
-using AgateLib.Platform;
 
 namespace ShootTheTraps
 {
-	public class Particle : GameObject
-	{
-		double mCreateTime;
-		Color mColor;
-		int mAlpha = 255;
-		int mImageIndex;
-		const double particleLifeTimeMilliseconds = 2000;
+    public class Particle : GameObject
+    {
+        private Color color;
+        private int alpha = 255;
+        private int mImageIndex;
+        private const double particleLifeTimeMilliseconds = 2000;
 
-		public static List<Surface> Images { get; private set; }
+        public static List<Texture2D> Images { get; private set; } = new List<Texture2D>();
+        
 
+        public override Rectangle BoundingRect
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    1,
+                    1);
+            }
+        }
+        /// Creates a new instance of Particle */
+        public Particle(Color clr, Random rnd)
+        {
+            Acceleration.Y = Gravity;
 
-		static Particle()
-		{
-			Images = new List<Surface>();
-		}
+            color = clr;
 
-		public override Rectangle BoundingRect
-		{
-			get
-			{
-				return new Rectangle(
-					(int)Position.X,
-					(int)Position.Y,
-					1,
-					1);
-			}
-		}
-		/// Creates a new instance of Particle */
-		public Particle(Color clr, Random rnd)
-		{
-			Acceleration.Y = Gravity;
+            mImageIndex = rnd.Next(Images.Count);
+        }
 
-			mCreateTime = Timing.TotalMilliseconds;
-			mColor = clr;
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            alpha = (int)(255 * (1 - LifeTime_ms / particleLifeTimeMilliseconds));
+            if (alpha < 0)
+            {
+                alpha = 0;
+                return;
+            }
 
-			mImageIndex = rnd.Next(Images.Count);
-		}
+            var image = Images[mImageIndex];
 
-		public override void Draw()
-		{
-			double now = Timing.TotalMilliseconds;
-			double elapsed = now - mCreateTime;
+            //image.DisplayAlignment = OriginAlignment.Center;
+            //image.RotationCenter = OriginAlignment.Center;
+            //image.Color = Color.FromArgb(alpha, color);
+            //image.RotationAngle = RotationAngle;
 
-			mAlpha = (int)(255 * (1 - elapsed / particleLifeTimeMilliseconds));
-			if (mAlpha < 0)
-			{
-				mAlpha = 0;
-				return;
-			}
+            //image.Draw((float)Position.X, (float)Position.Y);
 
-			var image = Images[mImageIndex];
+            spriteBatch.Draw(image,
+                position: Position,
+                origin: new Vector2(image.Width / 2, image.Height / 2),
+                rotation: RotationAngle,
+                color: new Color(color, alpha));
+        }
 
-			image.DisplayAlignment = OriginAlignment.Center;
-			image.RotationCenter = OriginAlignment.Center;
-			image.Color = Color.FromArgb(mAlpha, mColor);
-			image.RotationAngle = RotationAngle;
+        public override bool DeleteMe
+        {
+            get
+            {
+                if (OutsideField)
+                    return true;
 
-			image.Draw((float)Position.X, (float)Position.Y);
-		}
-
-		public override bool DeleteMe
-		{
-			get
-			{
-				if (OutsideField)
-					return true;
-
-				if (mAlpha <= 0)
-					return true;
-				else
-					return false;
-			}
-		}
-	}
+                if (alpha <= 0)
+                    return true;
+                else
+                    return false;
+            }
+        }
+    }
 
 }

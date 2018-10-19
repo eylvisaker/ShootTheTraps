@@ -1,140 +1,147 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using AgateLib;
-using AgateLib.DisplayLib;
-using AgateLib.Geometry;
 
 namespace ShootTheTraps
 {
-	public class Trap : GameObject
-	{
-		const int width = 24;
-		const int height = 16;
-		Color mColor = Color.Red;
+    public class Trap : GameObject
+    {
+        private const int width = 24;
+        private const int height = 16;
+        private Color color = Color.Red;
+        private bool mDeleteMe = false;
+        private static Random sRandom;
+        private static Color[] sColors =
+        {
+            Color.White, Color.Blue, Color.Red,
+            Color.Purple, Color.Yellow, Color.Green,
+            Color.Cyan,
+        };
 
-		bool mDeleteMe = false;
+        public static Texture2D Image { get; set; }
 
-		static Random sRandom;
-		static Color[] sColors = 
-		{
-			Color.White, Color.Blue, Color.Red, 
-			Color.Purple, Color.Yellow, Color.Green,
-			Color.Cyan,
-		};
+        /// <summary>
+        /// Creates a new instance of Trap 
+        /// </summary>
+        public Trap()
+        {
+            if (sRandom == null)
+                sRandom = new Random();
 
-		public static Surface Image { get; set; }
+            // only gravity affects this object.
+            Acceleration = new Vector2(0, Gravity);
 
-		/// <summary>
-		/// Creates a new instance of Trap 
-		/// </summary>
-		public Trap()
-		{
-			if (sRandom == null)
-				sRandom = new Random();
+            color = sColors[sRandom.Next(sColors.Length)];
+        }
 
-			// only gravity affects this object.
-			Acceleration = new Vector3d(0, Gravity, 0);
+        public override Rectangle BoundingRect
+        {
+            get
+            {
+                int width = Image.Width;
+                int height = Image.Height;
 
-			mColor = sColors[sRandom.Next(sColors.Length)];
-		}
+                return new Rectangle(
+                    (int)Position.X - width / 2,
+                    (int)Position.Y - height / 2,
+                    width,
+                    height);
+            }
+        }
 
-		public override Rectangle BoundingRect
-		{
-			get
-			{
-				int width = Image.DisplayWidth;
-				int height = Image.DisplayHeight;
+        public void SetDeleteMeFlag()
+        {
+            mDeleteMe = true;
+        }
 
-				return new Rectangle(
-					(int)Position.X - width / 2,
-					(int)Position.Y - height / 2,
-					width,
-					height);
-			}
-		}
+        public bool ContainsPoint(Vector2 pt)
+        {
+            Vector2 dist = Position - pt;
 
-		public void SetDeleteMeFlag()
-		{
-			mDeleteMe = true;
-		}
+            if (Math.Abs(dist.X) > width / 2) return false;
+            if (Math.Abs(dist.Y) > height / 2) return false;
 
-		public bool ContainsPoint(Vector3d pt)
-		{
-			Vector3d dist = Position - pt;
+            return true;
+        }
 
-			if (Math.Abs(dist.X) > width / 2) return false;
-			if (Math.Abs(dist.Y) > height / 2) return false;
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //Image.DisplayAlignment = OriginAlignment.Center;
+            //Image.RotationCenter = OriginAlignment.Center;
 
-			return true;
-		}
+            //Image.Color = color;
+            //Image.RotationAngle = RotationAngle;
 
-		public override void Draw()
-		{
-			Image.DisplayAlignment = OriginAlignment.Center;
-			Image.RotationCenter = OriginAlignment.Center;
+            //Image.Draw(Position.X, Position.Y);
 
-			Image.Color = mColor;
-			Image.RotationAngle = RotationAngle;
+            spriteBatch.Draw(Image,
+                             Position,
+                             (Rectangle?)null,
+                             color,
+                             RotationAngle,
+                             new Vector2(Image.Width / 2, Image.Height / 2),
+                             1,
+                             SpriteEffects.None,
+                             0);
 
-			Image.Draw((float)Position.X, (float)Position.Y);
+            if (OutsideField && Velocity.Y > 0)
+                mDeleteMe = true;
+            else
+                mDeleteMe = false;
+        }
 
-			if (OutsideField && Velocity.Y > 0)
-				mDeleteMe = true;
-			else
-				mDeleteMe = false;
-		}
+        public override bool DeleteMe
+        {
+            get { return mDeleteMe; }
+        }
 
-		public override bool DeleteMe
-		{
-			get { return mDeleteMe; }
-		}
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+        }
 
-		public Color Color
-		{
-			get { return mColor; }
-			set { mColor = value; }
-		}
+        private const int NumberOfParticles = 20;
+        private const double ParticleSpeed = 100;
 
-		const int NumberOfParticles = 20;
-		const double ParticleSpeed = 100;
+        protected override List<GameObject> ProtectedCreateDebris()
+        {
+            List<GameObject> retval = new List<GameObject>();
+            Vector2 totalVelocity = Vector2.Zero;
+            Random rnd = new Random();
 
-		protected override List<GameObject> ProtectedCreateDebris()
-		{
-			List<GameObject> retval = new List<GameObject>();
-			Vector3d totalVelocity = new Vector3d(0, 0, 0);
-			Random rnd = new Random();
+            for (int i = 0; i < NumberOfParticles; i++)
+            {
+                Particle p = new Particle(Color, rnd);
 
-			for (int i = 0; i < NumberOfParticles; i++)
-			{
-				Particle p = new Particle(Color, rnd);
+                p.Position = Position;
 
-				p.Position = Position;
+                p.Velocity.X = (float)sRandom.NextDouble() * 2 - 1;
+                p.Velocity.Y = (float)sRandom.NextDouble() * 2 - 1;
+                p.Velocity.Normalize();
 
-				p.Velocity.X = sRandom.NextDouble() * 2 - 1;
-				p.Velocity.Y = sRandom.NextDouble() * 2 - 1;
+                p.Velocity *= (float)(sRandom.NextDouble() * ParticleSpeed);
+                p.RotationalVelocity = (float)(sRandom.NextDouble() - 0.5) * 40;
 
-				p.Velocity = p.Velocity.Normalize() * (sRandom.NextDouble() * ParticleSpeed);
-				p.RotationalVelocity = (sRandom.NextDouble() - 0.5) * 40;
+                totalVelocity = totalVelocity + p.Velocity;
+                retval.Add(p);
+            }
 
-				totalVelocity = totalVelocity + p.Velocity;
-				retval.Add(p);
-			}
+            // now apply conservation of momentum, by giving a small portion
+            // of the excess momentum to each particle
+            Vector2 give = totalVelocity * (-1.0f / NumberOfParticles);
 
-			// now apply conservation of momentum, by giving a small portion
-			// of the excess momentum to each particle
-			Vector3d give = totalVelocity * (-1.0 / NumberOfParticles);
+            for (int i = 0; i < NumberOfParticles; i++)
+            {
+                Particle p = (Particle)retval[i];
 
-			for (int i = 0; i < NumberOfParticles; i++)
-			{
-				Particle p = (Particle)retval[i];
-
-				p.Velocity = p.Velocity + Velocity + give;
-			}
+                p.Velocity = p.Velocity + Velocity + give;
+            }
 
 
-			return retval;
-		}
+            return retval;
+        }
 
-	}
+    }
 }
