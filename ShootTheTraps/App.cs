@@ -20,6 +20,8 @@ namespace ShootTheTraps
         private int displayedScore = 0;
         private float gameOverTimeLeft_ms = 0;
         private float bonusTimeLeft_ms = 0;
+        private float betweenLevelTextTimeLeft_ms = 0;
+
         [Obsolete("What is this for?")]
         private float levelTimeElapsed_ms = 0;
         private int displayedMultiplier = 1;
@@ -220,8 +222,10 @@ Click to start.";
                 NewGame();
                 return;
             }
-            //if (mLevelTime != 0)
-            //    return;
+
+            if (betweenLevelTextTimeLeft_ms > 0)
+                return;
+
             if (bonusTimeLeft_ms > 0)
                 return;
 
@@ -253,6 +257,7 @@ Click to start.";
             gameOverTimeLeft_ms = 0;
             displayedMultiplier = 1;
             levelTimeElapsed_ms = 0;
+            betweenLevelTextTimeLeft_ms = totalTimeForBetweenLevelText;
         }
 
         private bool ContinueYet
@@ -281,12 +286,24 @@ Click to start.";
 
             levelTimeElapsed_ms += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            betweenLevelTextTimeLeft_ms -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (gameState.CanAdvanceLevel && (gameState.Score == displayedScore || gameState.EndOfLevelBonus))
+            {
+                gameState.NextLevel();
+                betweenLevelTextTimeLeft_ms = totalTimeForBetweenLevelText;
+            }
+
             if (Math.Abs(scoreDiff) < displayIncrement)
                 displayedScore = gameState.Score;
 
             if (gameState.Score > displayedScore) displayedScore += displayIncrement;
             if (gameState.Score < displayedScore) displayedScore -= displayIncrement;
 
+            if (bonusTimeLeft_ms <= 0)
+            {
+                gameState.ClearBonus();
+            }
         }
 
         private void DrawInformation(SpriteBatch spriteBatch)
@@ -309,12 +326,10 @@ Click to start.";
             {
                 DrawGameOverText();
             }
-            else if ((gameState.CanAdvanceLevel && (gameState.Score == displayedScore || gameState.EndOfLevelBonus))
-                /*|| mLevelTime != 0*/)
+            else if (betweenLevelTextTimeLeft_ms > 0)
             {
                 DrawBetweenLevelText();
             }
-
         }
 
         private void DrawMousePointer(SpriteBatch spriteBatch)
@@ -339,18 +354,14 @@ Click to start.";
 
         private void DrawBetweenLevelText()
         {
-            float waitTime = totalTimeForBetweenLevelText;
+            float waitTime = totalTimeForBetweenLevelText / 2;
 
-            if (gameState.Level == 0)
-                waitTime *= 2;
-
-            if (gameState.Level > 0 && levelTimeElapsed_ms < waitTime)
+            if (gameState.Level > 1 && betweenLevelTextTimeLeft_ms > waitTime)
+            {
                 DrawLevelEndText();
+            }
             else
             {
-                if (gameState.CanAdvanceLevel)
-                    gameState.NextLevel();
-
                 DrawLevelBeginText();
             }
         }
@@ -390,11 +401,11 @@ Click to start.";
                 new Color(Color.Black, 128));
 
             // back the border color for the text oscillate between red and black
-            int b = (int)(255 * Math.Abs(Math.Sin(12 * levelTimeElapsed_ms / totalTimeForBetweenLevelText)));
+            int b = (int)(255 * Math.Abs(Math.Sin(12 * betweenLevelTextTimeLeft_ms / totalTimeForBetweenLevelText)));
             var borderColor = new Color(0, 0, b);
 
-            CenterText(font, textY, "End of Level " + gameState.Level, Color.White, borderColor);
-
+            CenterText(font, textY, $"End of Level {gameState.Level - 1}", Color.White, borderColor);
+            
             font.Size = 24;
             CenterText(font, textY + font.FontHeight * 2,
                 "BONUS for remaining pulls: " + gameState.BonusPoints.ToString(),
@@ -403,6 +414,7 @@ Click to start.";
             //if (Timing.TotalMilliseconds - mLevelTime > totalTimeForBetweenLevelText)
             //    mLevelTime = 0;
         }
+
         private void DrawGameOverText()
         {
             int fontHeight = font.FontHeight;
@@ -432,7 +444,7 @@ Click to start.";
 
             Color bonusColor = Color.White;
 
-            if (levelTimeElapsed_ms % 500 < 250)
+            if (gameState.LevelTimeElapsed % 500 < 250)
                 bonusColor = Color.Yellow;
 
             FillRect(spriteBatch,
@@ -443,11 +455,6 @@ Click to start.";
             textY += font.FontHeight;
 
             CenterText(font, textY, "BONUS: " + gameState.BonusPoints, bonusColor, Color.Black);
-
-            if (bonusTimeLeft_ms <= 0)
-            {
-                gameState.ClearBonus();
-            }
         }
 
         private int DrawBottomStatus()

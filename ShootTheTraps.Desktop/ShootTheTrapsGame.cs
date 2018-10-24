@@ -38,6 +38,8 @@ namespace ShootTheTraps.Desktop
             content = new ContentProvider(Content);
 
             scenes.Add(new App(GraphicsDevice, Window, content));
+
+            Window.Title = "Shoot the Traps";
         }
 
         /// <summary>

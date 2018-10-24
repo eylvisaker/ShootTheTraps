@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShootTheTraps.Desktop</RootNamespace>
-    <AssemblyName>ShootTheTraps.Desktop</AssemblyName>
+    <AssemblyName>ShootTheTraps</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>

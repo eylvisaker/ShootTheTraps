@@ -80,6 +80,11 @@ namespace ShootTheTraps
 
         }
 
+        /// <summary>
+        /// Total time elapsed in milliseconds.
+        /// </summary>
+        public float LevelTimeElapsed => levelElapsedTime_ms;
+
         public void Dispose()
         {
             gunImage.Dispose();
