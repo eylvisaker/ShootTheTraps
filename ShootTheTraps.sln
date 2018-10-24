@@ -19,8 +19,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShootTheTraps.Desktop", "Sh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{9986891D-6F99-442E-A804-7204CDA54757}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AgateLib.Physics", "AgateLib\AgateLib.Physics\AgateLib.Physics.shproj", "{062658FA-CA79-41C2-B4A5-AD9B2A88BEBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2F932D9-C0EF-475B-802B-A823132BCB91}"
+	ProjectSection(SolutionItems) = preProject
+		Build.bat = Build.bat
+		Build.ps1 = Build.ps1
+		Coverage.bat = Coverage.bat
+		IntegrationTest.bat = IntegrationTest.bat
+		Package-Build.ps1 = Package-Build.ps1
+		Package-Wrap.ps1 = Package-Wrap.ps1
+		package-wrap.sh = package-wrap.sh
+		publish.sh = publish.sh
+		UnitTest.bat = UnitTest.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		AgateLib\AgateLib.Physics\AgateLib.Physics.projitems*{062658fa-ca79-41c2-b4a5-ad9b2a88beba}*SharedItemsImports = 13
+		AgateLib\AgateLib.Physics\AgateLib.Physics.projitems*{509f01e0-517f-48c8-bc2b-fefc78312dd4}*SharedItemsImports = 4
 		AgateLib\AgateLib\AgateLib.projitems*{509f01e0-517f-48c8-bc2b-fefc78312dd4}*SharedItemsImports = 4
 		AgateLib\AgateLib\AgateLib.projitems*{64afd0a6-1c2e-4c1e-802f-696542f48280}*SharedItemsImports = 4
 		ShootTheTraps\ShootTheTraps.projitems*{64afd0a6-1c2e-4c1e-802f-696542f48280}*SharedItemsImports = 4
@@ -148,6 +165,7 @@ Global
 		{509F01E0-517F-48C8-BC2B-FEFC78312DD4} = {795D4E3D-D0E7-4421-9BD6-16947AD1787D}
 		{5F203662-6438-4CD9-BE4B-D111F1DFB925} = {795D4E3D-D0E7-4421-9BD6-16947AD1787D}
 		{64AFD0A6-1C2E-4C1E-802F-696542F48280} = {9986891D-6F99-442E-A804-7204CDA54757}
+		{062658FA-CA79-41C2-B4A5-AD9B2A88BEBA} = {795D4E3D-D0E7-4421-9BD6-16947AD1787D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C640D848-FB1D-4CE2-83B5-EB044C3E1646}
