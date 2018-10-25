@@ -300,7 +300,12 @@ Click to start.";
             if (gameState.Score > displayedScore) displayedScore += displayIncrement;
             if (gameState.Score < displayedScore) displayedScore -= displayIncrement;
 
-            if (bonusTimeLeft_ms <= 0)
+            if (gameState.Score != displayedScore && gameState.BonusAdded && gameState.TrapsHit > 1)
+            {
+                bonusTimeLeft_ms = 2000;
+            }
+
+            if (bonusTimeLeft_ms <= 0 && gameState.BonusAdded && betweenLevelTextTimeLeft_ms <= 0)
             {
                 gameState.ClearBonus();
             }

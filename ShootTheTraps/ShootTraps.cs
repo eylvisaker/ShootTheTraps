@@ -109,7 +109,6 @@ namespace ShootTheTraps
                 return;
 
             ScoreMultiplier = 1;
-            ClearBonus();
 
             CanAdvanceLevel = false;
             levelElapsedTime_ms = 0;
