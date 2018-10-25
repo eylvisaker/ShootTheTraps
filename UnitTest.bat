@@ -1,7 +1,5 @@
 @ECHO OFF
 
-echo "No unit tests for this project."
+packages\xunit.runner.console.2.4.0\tools\net452\xunit.console.exe UnitTests\bin\Debug\UnitTests.dll -noshadow
 
-REM packages\xunit.runner.console.2.4.0\tools\net452\xunit.console.exe UnitTests\bin\Debug\UnitTests.dll 
-REM 
-REM exit /b %ERRORLEVEL%
+exit /b %ERRORLEVEL%

@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		UnitTest.bat = UnitTest.bat
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		AgateLib\AgateLib.Physics\AgateLib.Physics.projitems*{062658fa-ca79-41c2-b4a5-ad9b2a88beba}*SharedItemsImports = 13
@@ -155,6 +157,30 @@ Global
 		{64AFD0A6-1C2E-4C1E-802F-696542F48280}.Release|x64.Build.0 = Release|Any CPU
 		{64AFD0A6-1C2E-4C1E-802F-696542F48280}.Release|x86.ActiveCfg = Release|Any CPU
 		{64AFD0A6-1C2E-4C1E-802F-696542F48280}.Release|x86.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|x64.Build.0 = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Debug|x86.Build.0 = Debug|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|Any CPU.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|Any CPU.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|x64.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|x64.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|x86.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Info|x86.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|Any CPU.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|Any CPU.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|x64.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|x64.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|x86.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Performance|x86.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|x64.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|x64.Build.0 = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|x86.ActiveCfg = Release|Any CPU
+		{63626E57-06A2-4771-9BF4-DDBE0E9FA99D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

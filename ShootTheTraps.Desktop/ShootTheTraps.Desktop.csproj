@@ -48,9 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.4.5.1\lib\net40\MathNet.Numerics.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
