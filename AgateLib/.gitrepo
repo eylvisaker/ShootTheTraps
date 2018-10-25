@@ -7,5 +7,5 @@
 	remote = https://github.com/eylvisaker/AgateLib
 	branch = master
 	commit = c68a5d5109c4a3840e045a5a640d419c93d3f2ac
-	parent = 1cf0c6da2b79ea70a576efd456325f14181aefbc
+	parent = afd727ef481e528f1b0e4ebc7e5068a8fbdf7b08
 	cmdver = 0.3.1
