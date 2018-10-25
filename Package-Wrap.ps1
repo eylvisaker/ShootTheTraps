@@ -7,7 +7,7 @@ param (
   [string] $destDir = "Output"
 )
 
-$projectName = "BallBusterX"
+$projectName = "ShootTheTraps"
 
 if ($version -eq "") {
   echo "Pass -version to supply a version number."
@@ -21,6 +21,6 @@ echo "and destination directory $destDir"
 
 New-Item -ItemType Directory -Force -Path "$destDir"
 
-Copy-Item "$sourceDir\BallBusterX_Desktop$version.zip" -Destination "$destDir\$($projectName)_Windows$version.zip"
+Copy-Item "$sourceDir\$($projectName)_Desktop$version.zip" -Destination "$destDir\$($projectName)_Windows$version.zip"
 
 "Package wrapping on Windows completed."
