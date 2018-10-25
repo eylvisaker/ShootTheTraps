@@ -4,7 +4,7 @@ version=$1
 sourceDir=$2
 destDir=$3
 
-projectName=BallBusterX
+projectName=ShootTheTraps
 projectRoot=`pwd`
 tmpRoot=tmp
 tmpDir="$tmpRoot/$projectName"
