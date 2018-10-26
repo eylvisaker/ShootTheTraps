@@ -29,7 +29,7 @@ $dummy = New-Item -ItemType Directory -Force -Path $destDir
 
 .\Build.ps1 -config Release
 
-CreateZipFile "$ProjectName.Desktop\bin\DesktopGL\AnyCPU\Release" "$ProjectName_Desktop$version"
+CreateZipFile "$ProjectName.Desktop\bin\DesktopGL\AnyCPU\Release" "$($ProjectName)_Desktop$version"
 
 Write-Output "Packaging complete."
 
