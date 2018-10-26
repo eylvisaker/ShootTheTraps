@@ -8,12 +8,12 @@ Param(
   [string]$version
 )
 
-$solutionFile = "ShootTheTraps.sln"
+. .\Project-Vars.ps1
 
 $ErrorActionPreference = "Stop"
 
 $buildArgs = @()
-$buildArgs += $solutionFile
+$buildArgs += $SolutionFile
 $buildArgs += "/T:Build"
 $buildArgs += "/P:Configuration=$config"
 
@@ -49,7 +49,7 @@ function Initialize
 
 function RestoreDependencies
 {
-    .\.nuget\nuget.exe restore $solutionFile
+    .\.nuget\nuget.exe restore $SolutionFile
     if ($LastExitCode -ne 0) { exit $LastExitCode }
 }
 
@@ -67,3 +67,4 @@ function Build
 Initialize
 RestoreDependencies
 Build
+

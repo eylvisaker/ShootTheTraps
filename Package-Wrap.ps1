@@ -7,7 +7,7 @@ param (
   [string] $destDir = "Output"
 )
 
-$projectName = "ShootTheTraps"
+. .\Project-Vars.ps1
 
 if ($version -eq "") {
   echo "Pass -version to supply a version number."
@@ -15,12 +15,13 @@ if ($version -eq "") {
 
 if ($version -ne "") { $version = "-$version" }
 
-echo "Packaging $projectName v$version"
+echo "Packaging $ProjectName v$version"
 echo "Using source directory $sourceDir"
 echo "and destination directory $destDir"
 
 New-Item -ItemType Directory -Force -Path "$destDir"
 
-Copy-Item "$sourceDir\$($projectName)_Desktop$version.zip" -Destination "$destDir\$($projectName)_Windows$version.zip"
+Copy-Item "$sourceDir\$($ProjectName)_Desktop$version.zip" -Destination "$destDir\$($ProjectName)_Windows$version.zip"
 
 "Package wrapping on Windows completed."
+

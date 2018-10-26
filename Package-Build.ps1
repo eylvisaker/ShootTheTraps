@@ -6,6 +6,8 @@ param (
   [string] $destDir = "Output"
 )
 
+. .\Project-Vars.ps1
+
 if ($version -eq "") {
   echo "Pass -version to supply a version number."
 }
@@ -27,6 +29,7 @@ $dummy = New-Item -ItemType Directory -Force -Path $destDir
 
 .\Build.ps1 -config Release
 
-CreateZipFile "ShootTheTraps.Desktop\bin\DesktopGL\AnyCPU\Release" "ShootTheTraps_Desktop$version"
+CreateZipFile "$ProjectName.Desktop\bin\DesktopGL\AnyCPU\Release" "$ProjectName_Desktop$version"
 
 Write-Output "Packaging complete."
+
